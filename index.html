@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SEPA QR-code generator — Scan &amp; Betaal</title>
+  <meta name="description" content="Genereer SEPA QR-codes voor bankoverschrijvingen. Volledig client-side, geen tracking, geen server.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <h1>SEPA QR-code generator</h1>
+      <p class="app__sub">Scan met je bank-app en betaal. Alles gebeurt lokaal in je browser — er wordt niets verstuurd of opgeslagen.</p>
+    </header>
+
+    <div class="layout">
+      <form id="form" class="form" autocomplete="off" novalidate>
+        <label class="field">
+          <span class="field__label">Begunstigde (naam) <span class="req">*</span></span>
+          <input type="text" id="name" name="name" maxlength="70" placeholder="Jan Janssens" required>
+          <small class="field__hint" data-hint="name"></small>
+        </label>
+
+        <label class="field">
+          <span class="field__label">IBAN <span class="req">*</span></span>
+          <input type="text" id="iban" name="iban" placeholder="BE68 5390 0754 7034" required spellcheck="false">
+          <small class="field__hint" data-hint="iban"></small>
+        </label>
+
+        <label class="field">
+          <span class="field__label">BIC <span class="opt">(optioneel)</span></span>
+          <input type="text" id="bic" name="bic" maxlength="11" placeholder="GEBABEBB" spellcheck="false">
+          <small class="field__hint" data-hint="bic"></small>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Bedrag in EUR <span class="opt">(optioneel)</span></span>
+          <input type="text" inputmode="decimal" id="amount" name="amount" placeholder="25,00">
+          <small class="field__hint" data-hint="amount"></small>
+        </label>
+
+        <fieldset class="field field--radio">
+          <legend class="field__label">Mededeling</legend>
+          <div class="radios">
+            <label class="radio"><input type="radio" name="commtype" value="unstructured" checked> Vrije tekst</label>
+            <label class="radio"><input type="radio" name="commtype" value="structured"> Gestructureerd (+++/+++)</label>
+          </div>
+          <input type="text" id="comm" name="comm" maxlength="140" placeholder="Factuur 2026-001">
+          <small class="field__hint" data-hint="comm"></small>
+        </fieldset>
+
+        <button type="button" id="reset" class="btn btn--ghost">Wissen</button>
+      </form>
+
+      <div class="result">
+        <div id="qr" class="qr" aria-live="polite"></div>
+        <p id="status" class="status"></p>
+        <div class="result__actions">
+          <button type="button" id="download" class="btn" disabled>Download PNG</button>
+        </div>
+        <details class="payload">
+          <summary>Toon ruwe QR-inhoud</summary>
+          <pre id="payload"></pre>
+        </details>
+      </div>
+    </div>
+
+    <footer class="app__footer">
+      <p>Gebaseerd op de EPC069-12 standaard (European Payments Council). 100% client-side, open source, geen logging.</p>
+    </footer>
+  </main>
+
+  <script src="vendor/qrcode.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
