@@ -7,6 +7,8 @@ Je vult een formulier in (naam, IBAN, optioneel bedrag en mededeling) en de
 app tekent live een QR-code die je met je bank-app kunt scannen om de
 overschrijving voor te bereiden.
 
+Gebruik 'm nu: https://sepa.small-victories.co
+
 ## Privacy
 
 - **Geen server, geen backend.** Alles draait in je browser.
