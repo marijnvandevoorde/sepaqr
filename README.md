@@ -12,9 +12,15 @@ Gebruik 'm nu: https://sepa.small-victories.co
 ## Privacy
 
 - **Geen server, geen backend.** Alles draait in je browser.
-- **Geen tracking, geen logging, geen externe requests.** De QR-bibliotheek is
-  lokaal mee-geleverd (`vendor/qrcode.js`), er wordt niets van een CDN geladen.
-- Je kunt de pagina zelfs offline of vanaf een USB-stick openen.
+- **Je betaalgegevens verlaten je browser nooit.** De QR-bibliotheek is lokaal
+  mee-geleverd (`vendor/qrcode.js`), het formulier wordt nooit ingediend en de
+  app zet niets in de URL.
+- **Bezoekersstatistieken alleen met toestemming.** `consent.js` laadt Google
+  Tag Manager (`GTM_ID` bovenaan het bestand) met Google Consent Mode v2: alles
+  staat standaard op "denied", en Google Analytics zet pas cookies na
+  "Accepteren" in de cookiebanner. `consent.js` haalt query en hash uit de URL
+  voor GTM ze kan lezen. Zet `GTM_ID` leeg en er wordt niets geladen.
+- De generator werkt ook offline of vanaf een USB-stick (zonder statistieken).
 
 ## Gebruik
 
@@ -26,6 +32,8 @@ build-stap nodig.
 
 ```
 index.html      formulier + layout
+privacy.html    privacyverklaring (/privacy)
+consent.js      cookiebanner + Google Tag Manager (Consent Mode v2)
 style.css       opmaak
 app.js          payload-opbouw, validatie en QR-generatie
 vendor/qrcode.js  QR-code-bibliotheek (qrcode-generator, MIT-licentie)

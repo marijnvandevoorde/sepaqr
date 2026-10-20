@@ -194,3 +194,32 @@ input.valid { border-color: var(--ok); }
   font-size: .8rem;
   text-align: center;
 }
+
+.app__footer a { color: var(--muted); }
+.app__footer a:hover { color: var(--text); }
+
+/* Cookie banner (consent.js) */
+.consent {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 20;
+  background: var(--panel);
+  color: var(--text);
+  border-top: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+  font-size: .9rem;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, .3);
+}
+.consent[hidden] { display: none; }
+.consent__inner { max-width: 920px; margin: 0 auto; }
+.consent h2 { font-size: 1rem; margin: 0 0 .25rem; }
+.consent p { margin: 0 0 .75rem; color: var(--muted); }
+.consent a { color: var(--accent); }
+.consent__actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+.consent__actions .btn { color: var(--text); border-color: var(--accent); }
+.consent .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Privacy page */
+.prose { max-width: 65ch; }
+.prose h2 { font-size: 1.1rem; margin: 1.5rem 0 .5rem; }
+.prose a { color: var(--accent); }
