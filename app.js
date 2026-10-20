@@ -1,7 +1,7 @@
 /*
  * SEPA QR-code generator — volledig client-side.
  * Bouwt een EPC069-12 payload (SEPA Credit Transfer) en rendert die als QR-code.
- * Geen netwerkverkeer, geen tracking. Alles draait lokaal in de browser.
+ * Betaalgegevens verlaten de browser nooit: geen backend, en niets komt in de URL.
  */
 (function () {
   "use strict";
@@ -240,18 +240,26 @@
 
   // ---- Events ------------------------------------------------------------
 
+  // Nooit indienen: een GET-submit zou de velden (IBAN, bedrag...) in de URL zetten.
+  els.form.addEventListener("submit", function (e) { e.preventDefault(); });
   els.form.addEventListener("input", render);
   els.form.addEventListener("change", render);
 
+  // Download via een blob:-URL in plaats van de data:-URL, zodat de QR-inhoud
+  // nooit in een link-URL staat die analytics (klik-/downloadmeting) kan zien.
   els.download.addEventListener("click", function () {
     if (!lastPng) return;
-    var a = document.createElement("a");
-    a.href = lastPng;
     var name = (els.name.value.trim() || "sepa").replace(/[^\w\-]+/g, "_").slice(0, 40);
-    a.download = "sepa-qr-" + name + ".png";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    fetch(lastPng).then(function (r) { return r.blob(); }).then(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "sepa-qr-" + name + ".png";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    });
   });
 
   els.reset.addEventListener("click", function () {
